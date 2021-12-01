@@ -41,11 +41,11 @@ class Uno:
             # print("Valid choice")
         else:
             print("Invalid choice dealing card")
-            # Add a card to all players
+            # Deal player card
 
         return topCard
 
-    def Uno(self, deck, hands):
+    def uno(self, deck, hands):
         topCard = self.startCard(deck)
         print(topCard)
         topCard = self.userTurn(deck, hands[self.playing_card.user_hand], topCard)
@@ -55,7 +55,7 @@ class Uno:
         deck = self.generateDeck()
         deck = self.playing_card.shuffle_cards(deck)
         hands = self.playing_card.deal_cards(deck, 7, number_of_players)
-        self.Uno(deck, hands)
+        self.uno(deck, hands)
 
 
 if __name__ == "__main__":
