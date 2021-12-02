@@ -22,6 +22,20 @@ class UnoTest(unittest.TestCase):
 
         self.assertEqual("R-4", self.uno.userTurn(deck, hand, topCard))
 
+    def testFalseUserTurn(self):
+        topCard = "R-1"
+        hand = ["B-2", "G-4"]
+        deck = ["G-2"]
+        play = 1
+
+        self.assertEqual("R-1", self.uno.userTurn(deck, hand, topCard))
+
+    def testAbleToPlay(self):
+        topCard = "R-1"
+        hand = ["B-2", "Y-4", "G-+2"]
+
+        self.assertEqual(False , self.uno.ableToPlay(hand, topCard))
+
 
 def main():
     unittest.main()
