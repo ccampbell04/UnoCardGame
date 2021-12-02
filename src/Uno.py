@@ -18,31 +18,69 @@ class Uno:
         topCard = self.playing_card.deal_a_card(deck)
         return topCard
 
-    def userTurn(self, deck, hand, topCard):
-        print(hand)
+    def ableToPlay(self, hand, topCard):
+
+        topCardSplit = topCard.split("-")
+
+        for cards in hand:
+            cardSplit = cards.split("-")
+
+            if cardSplit[0] == topCardSplit[0]:
+                return True
+            elif cardSplit[1] == topCardSplit[1]:
+                return True
+
+        return False
+
+    def userInput(self, hand):
         while True:
             play = int(input("Pick a card to play (by position)"))
-            if play <= len(hand):
+            if len(hand) >= play > 0:
                 break
             print("Out of Range")
-        play -= 1
 
-        playerSplit = hand[play].split("-")
-        deckSplit = topCard.split("-")
-        # print(split)
 
-        if playerSplit[0] == deckSplit[0]:
-            topCard = hand[play]
-            hand.pop(play)
-            # print("Valid choice")
-        elif playerSplit[1] == deckSplit[1]:
-            topCard = hand[play]
-            hand.pop(play)
-            # print("Valid choice")
+        return play
+
+    def userTurn(self, deck, hand, topCard):
+        if self.ableToPlay(hand, topCard):
+
+            print("Your hand is:")
+            print(hand)
+            play = self.userInput(hand)
+            play -= 1
+            playerSplit = hand[play].split("-")
+            deckSplit = topCard.split("-")
+            # print(split)
+            while True:
+                if playerSplit[0] == deckSplit[0]:
+                    topCard = hand[play]
+                    hand.pop(play)
+                    break
+                    # print("Valid choice")
+                elif playerSplit[1] == deckSplit[1]:
+                    topCard = hand[play]
+                    hand.pop(play)
+                    break
+                    # print("Valid choice")
+                else:
+                    print("Invalid choice")
+                    play = self.userInput(hand)
+                    # Deal player card
         else:
-            print("Invalid choice dealing card")
-            # Deal player card
+            dealtCard = self.playing_card.deal_a_card(deck)
+            dealtSplit = dealtCard.split("-")
+            deckSplit = topCard.split("-")
 
+            if dealtSplit[0] == deckSplit[0]:
+                print("Your new card is valid, playing " + dealtCard)
+            elif dealtSplit[1] == deckSplit[0]:
+                print("Your new card is valid, playing " + dealtCard)
+            else:
+                print("New card can't be played, adding to hand")
+                hand.append(dealtSplit)
+
+            print(hand)
         return topCard
 
     def uno(self, deck, hands):
