@@ -127,3 +127,11 @@ class Uno:
 if __name__ == "__main__":
     uno = Uno()
     uno.main()
+
+'''Still to do
+Finish computer turn
+Program wild cards and special cards
+Calculate winner
+Calculate points for losing players
+Loop in uno to continue game after turn 1
+'''
