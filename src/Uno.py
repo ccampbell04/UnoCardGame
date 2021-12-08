@@ -2,6 +2,7 @@ from src.ConsoleInput import ConsoleInput
 from src.ConsoleOutput import ConsoleOutput
 from PlayingCard import PlayingCard
 
+
 class Uno:
     playing_card = PlayingCard()
     suits = {"R": "Red", "B": "Blue", "Y": "Yellow", "G": "Green"}
@@ -79,20 +80,8 @@ class Uno:
                     play = self.userInput(hand)
                     # Deal player card
         else:
-            dealtCard = self.playing_card.deal_a_card(deck)
-            dealtSplit = self.splitCard(dealtCard)
-            deckSplit = self.splitCard(topCard)
-
-            if dealtSplit[0] == deckSplit[0]:
-                self.output.display("Your new card is valid, playing " + dealtCard)
-            elif dealtSplit[1] == deckSplit[0]:
-                self.output.display("Your new card is valid, playing " + dealtCard)
-            else:
-                self.output.display("New card can't be played, adding to hand")
-                hand.append(dealtSplit)
-
-            self.output.display(hand)
-        return topCard
+            topCard = self.cantPlay(hand, deck, topCard)
+        return topCard,
 
     def computerTurn(self, deck, hand, topCard):
         if self.ableToPlay(hand, topCard):
@@ -105,26 +94,62 @@ class Uno:
                 elif cardSplit[1] == topSplit[1]:
                     possibleMoves.append(cards)
 
-            bestFace = 0
-            for moves in possibleMoves:
-                split = self.splitCard(moves)
-                intSplit = int(split[1])
-                if intSplit > bestFace:
-                    bestFace = int(split[1])
-                    bestMove = moves
+            bestMoveIndex = self.bestCompMove(possibleMoves)
+            bestMove = possibleMoves(bestMoveIndex)
+            topCard = bestMove
+            hand.pop(bestMove)
 
-            return bestMove
+        else:
+            topCard = self.cantPlay(hand, deck, topCard)
+        return topCard
+
+    def cantPlay(self, hand, deck, topCard):
+        dealtCard = self.playing_card.deal_a_card(deck)
+        dealtSplit = self.splitCard(dealtCard)
+        deckSplit = self.splitCard(topCard)
+
+        if dealtSplit[0] == deckSplit[0]:
+            self.output.display("Your new card is valid, playing " + dealtCard)
+            topCard = dealtCard
+        elif dealtSplit[1] == deckSplit[0]:
+            self.output.display("Your new card is valid, playing " + dealtCard)
+            topCard = dealtCard
+        else:
+            self.output.display("New card can't be played, adding to hand")
+            hand.append(dealtSplit)
+
+        self.output.display(hand)
+        return topCard
+
+    def bestCompMove(self, possibleMoves):
+        bestFace = 0
+        for moves in possibleMoves:
+            split = self.splitCard(moves)
+            intSplit = int(split[1])
+            if intSplit > bestFace:
+                bestFace = int(split[1])
+                bestMove = moves
+
+        return bestMove
+
+    def checkWinner(self, hand):
+        if len(hand) == 0:
+            return True
+        else:
+            return False
 
     def uno(self, deck, hands):
         topCard = self.startCard(deck)
         self.output.display(topCard)
         topCard = self.userTurn(deck, hands[self.playing_card.user_hand], topCard)
 
+
     def main(self):
         number_of_players = int(self.gameInput.getString("Please enter the number of players, max is six"))
         deck = self.generateDeck()
         deck = self.playing_card.shuffle_cards(deck)
         hands = self.playing_card.deal_cards(deck, 7, number_of_players)
+
         self.uno(deck, hands)
 
 
@@ -133,9 +158,9 @@ if __name__ == "__main__":
     uno.main()
 
 '''Still to do
-Finish computer turn
+Loop in uno to continue game after turn 1
 Program wild cards and special cards
 Calculate winner
 Calculate points for losing players
-Loop in uno to continue game after turn 1
+
 '''

@@ -16,6 +16,9 @@ class BlackJack:
 
     playing_card = PlayingCard()
 
+    def setGameInput(self, gameInput):
+        self.gameInput = gameInput
+
     def score_hand(self, hand):
         """Score an individual hand of playing cards. We add each card score to a total. All face cards King, Queen
      and Jack score ten. If the hand has an ace we can score at one or eleven. If the hand is less than or equal to eleven
