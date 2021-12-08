@@ -1,5 +1,6 @@
+from src.ConsoleInput import ConsoleInput
+from src.ConsoleOutput import ConsoleOutput
 from PlayingCard import PlayingCard
-
 
 class Uno:
     playing_card = PlayingCard()
@@ -7,6 +8,9 @@ class Uno:
     faces = ["0", "1", "1", "2", "2", "3", "3", "4", "4", "5", "5", "6", "6", "7", "7", "8", "8", "9", "9", "S", "S",
              "R", "R", "+2", "+2"]
     wild = ["W-W", "W-W", "W-W", "W-W", "W-+4", "W-+4", "W-+4", "W-+4"]
+
+    gameInput = ConsoleInput()
+    output = ConsoleOutput()
 
     def generateDeck(self):
         deck = []
@@ -38,10 +42,10 @@ class Uno:
 
     def userInput(self, hand):
         while True:
-            play = int(input("Pick a card to play (by position)"))
+            play = int(self.gameInput.getString("Pick a card to play (by position)"))
             if len(hand) >= play > 0:
                 break
-            print("Out of Range")
+            self.output.display("Out of Range")
 
         return play
 
@@ -52,8 +56,8 @@ class Uno:
     def userTurn(self, deck, hand, topCard):
         if self.ableToPlay(hand, topCard):
 
-            print("Your hand is:")
-            print(hand)
+            self.output.display("Your hand is:")
+            self.output.display(hand)
             play = self.userInput(hand)
             play -= 1
             playerSplit = self.splitCard(hand[play])
@@ -63,15 +67,15 @@ class Uno:
                 if playerSplit[0] == deckSplit[0]:
                     topCard = hand[play]
                     hand.pop(play)
-                    print("Valid choice")
+                    self.output.display("Valid choice")
                     break
                 elif playerSplit[1] == deckSplit[1]:
                     topCard = hand[play]
                     hand.pop(play)
-                    print("Valid choice")
+                    self.output.display("Valid choice")
                     break
                 else:
-                    print("Invalid choice")
+                    self.output.display("Invalid choice")
                     play = self.userInput(hand)
                     # Deal player card
         else:
@@ -80,14 +84,14 @@ class Uno:
             deckSplit = self.splitCard(topCard)
 
             if dealtSplit[0] == deckSplit[0]:
-                print("Your new card is valid, playing " + dealtCard)
+                self.output.display("Your new card is valid, playing " + dealtCard)
             elif dealtSplit[1] == deckSplit[0]:
-                print("Your new card is valid, playing " + dealtCard)
+                self.output.display("Your new card is valid, playing " + dealtCard)
             else:
-                print("New card can't be played, adding to hand")
+                self.output.display("New card can't be played, adding to hand")
                 hand.append(dealtSplit)
 
-            print(hand)
+            self.output.display(hand)
         return topCard
 
     def computerTurn(self, deck, hand, topCard):
@@ -113,11 +117,11 @@ class Uno:
 
     def uno(self, deck, hands):
         topCard = self.startCard(deck)
-        print(topCard)
+        self.output.display(topCard)
         topCard = self.userTurn(deck, hands[self.playing_card.user_hand], topCard)
 
     def main(self):
-        number_of_players = int(input("Please enter the number of players, max is six"))
+        number_of_players = int(self.gameInput.getString("Please enter the number of players, max is six"))
         deck = self.generateDeck()
         deck = self.playing_card.shuffle_cards(deck)
         hands = self.playing_card.deal_cards(deck, 7, number_of_players)
