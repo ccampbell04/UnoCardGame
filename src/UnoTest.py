@@ -42,6 +42,11 @@ class UnoTest(unittest.TestCase):
         topCard = "B-6"
 
         self.assertEqual("B-9", self.uno.computerTurn(deck, hand, topCard))
+
+    def testCheckWinner(self):
+        hand = []
+        self.assertTrue(self.uno.checkWinner(hand))
+
 def main():
     unittest.main()
 

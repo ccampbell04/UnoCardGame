@@ -55,6 +55,7 @@ class Uno:
         return splitCard
 
     def userTurn(self, deck, hand, topCard):
+        self.output.display(topCard)
         if self.ableToPlay(hand, topCard):
 
             self.output.display("Your hand is:")
@@ -78,10 +79,13 @@ class Uno:
                 else:
                     self.output.display("Invalid choice")
                     play = self.userInput(hand)
-                    # Deal player card
+
         else:
             topCard = self.cantPlay(hand, deck, topCard)
-        return topCard,
+
+        win = self.checkWinner(hand)
+
+        return topCard, win
 
     def computerTurn(self, deck, hand, topCard):
         if self.ableToPlay(hand, topCard):
@@ -101,10 +105,13 @@ class Uno:
 
         else:
             topCard = self.cantPlay(hand, deck, topCard)
-        return topCard
+
+        win = self.checkWinner(hand)
+
+        return topCard, win
 
     def cantPlay(self, hand, deck, topCard):
-        dealtCard = self.playing_card.deal_a_card(deck)
+        dealtCard = deck.pop
         dealtSplit = self.splitCard(dealtCard)
         deckSplit = self.splitCard(topCard)
 
@@ -141,7 +148,11 @@ class Uno:
     def uno(self, deck, hands):
         topCard = self.startCard(deck)
         self.output.display(topCard)
-        topCard = self.userTurn(deck, hands[self.playing_card.user_hand], topCard)
+        win = False
+        while win==False:
+            topCard, win = self.userTurn(deck, hands[self.playing_card.user_hand], topCard)
+
+
 
 
     def main(self):
