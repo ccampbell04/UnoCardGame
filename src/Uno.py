@@ -8,9 +8,9 @@ from PlayingCard import PlayingCard
 class Uno:
     playing_card = PlayingCard()
     suits = {"R": "Red", "B": "Blue", "Y": "Yellow", "G": "Green"}
-    faces = ["0", "1", "1", "2", "2", "3", "3", "4", "4", "5", "5", "6", "6", "7", "7", "8", "8", "9", "9", "S", "S",
-             "R", "R", "+2", "+2"]
-    wild = ["W-W", "W-W", "W-W", "W-W", "W-+4", "W-+4", "W-+4", "W-+4"]
+    faces = ["0", "1", "1", "2", "2", "3", "3", "4", "4", "5", "5", "6", "6", "7", "7", "8", "8", "9", "9"]  # "S", "S"]
+    # "R", "R", "+2", "+2"]
+    # wild = ["W-W", "W-W", "W-W", "W-W", "W-+4", "W-+4", "W-+4", "W-+4"]
 
     gameInput = ConsoleInput()
     output = ConsoleOutput()
@@ -20,8 +20,8 @@ class Uno:
         for suit in self.suits.keys():
             for face in self.faces:
                 deck.append(suit + "-" + face)
-        for face in self.wild:
-            deck.append(face)
+        # for face in self.wild:
+        #   deck.append(face)
 
         return deck
 
@@ -63,11 +63,10 @@ class Uno:
             self.output.display("Your hand is:")
             self.output.display(hand)
             play = self.userInput(hand)
-            play -= 1
-            playerSplit = self.splitCard(hand[play])
             deckSplit = self.splitCard(topCard)
-            # print(split)
             while True:
+                play -= 1
+                playerSplit = self.splitCard(hand[play])
                 if playerSplit[0] == deckSplit[0] or playerSplit[1] == deckSplit[1]:
                     topCard = hand[play]
                     hand.pop(play)
@@ -96,18 +95,22 @@ class Uno:
             bestMoveIndex = self.bestCompMove(possibleMoves)
             bestMove = possibleMoves[bestMoveIndex]
             topCard = bestMove
-            hand.pop(bestMoveIndex)
+            pos = 0
+            count = 0
+            for card in hand:
+                if card == bestMove:
+                    pos = count
+                count += 1
+            hand.pop(pos)
 
             self.output.display("Computer played " + topCard)
 
         else:
             topCard = self.cantPlay(hand, deck, topCard)
 
-
-
         win = self.checkWinner(hand)
 
-        return topCard, win
+        return hand, topCard, win
 
     def cantPlay(self, hand, deck, topCard):
         dealtCard = self.playing_card.deal_a_card(deck)
@@ -123,7 +126,6 @@ class Uno:
             time.sleep(2.5)
             hand.append(dealtCard)
 
-        self.output.display(hand)
         return topCard
 
     def bestCompMove(self, possibleMoves):
@@ -146,23 +148,52 @@ class Uno:
         else:
             return False
 
+    def playGame(self, deck, hands, number_of_players, topCard):
+        playing = True
+
+        while playing:
+
+            self.output.display("------------------------User turn------------------------------")
+            topCard, win = self.userTurn(deck, hands[self.playing_card.user_hand], topCard)
+            if win:
+                self.output.display("User Wins!")
+                break
+            for i in range(1, number_of_players):
+                self.output.display("------------------------Computer " + str(i) + " turn------------------------")
+                hands[i], topCard, win = self.computerTurn(deck, hands[i], topCard)
+                if win:
+                    self.output.display("Computer" + str(i) + "Wins!")
+                    break
+                time.sleep(2)
+
+    def calcLoserPoints(self, hands, number_of_players):
+        for i in range(0, number_of_players):
+            score = 0
+            for card in hands[i]:
+                if card[0] == "W":
+                    score += 50
+                elif card[1] == "+" or card[1] == "R" or card == "S":
+                    score += 20
+                else:
+                    score += int(card[2])
+
+            if i == 0:
+                self.output.display("Player scored " + str(score))
+            else:
+                self.output.display("Computer " + str(i) + " scored " + str(score))
+
     def uno(self, deck, hands, number_of_players):
         topCard = self.startCard(deck)
         self.output.display(topCard)
-        win = False
+        self.playGame(deck, hands, number_of_players, topCard)
+        self.calcLoserPoints(hands, number_of_players)
 
-        while win == False:
-            topCard, win = self.userTurn(deck, hands[self.playing_card.user_hand], topCard)
-            for i in range(1, number_of_players):
-                self.output.display("------------------------Computer " + str(i) + " turn------------------------")
-                topCard, win = self.computerTurn(deck, hands[i], topCard)
-                time.sleep(2)
 
     def main(self):
         number_of_players = int(self.gameInput.getString("Please enter the number of players, max is six"))
         deck = self.generateDeck()
         deck = self.playing_card.shuffle_cards(deck)
-        hands = self.playing_card.deal_cards(deck, 7, number_of_players)
+        hands = self.playing_card.deal_cards(deck, 2, number_of_players)
 
         self.uno(deck, hands, number_of_players)
 
@@ -172,8 +203,6 @@ if __name__ == "__main__":
     uno.main()
 
 '''Still to do
-Loop in uno to continue game after turn 1
 Program wild cards and special cards
-Calculate winner
-Calculate points for losing players
+Have UNO! displayed when any player has 1 card left
 '''
