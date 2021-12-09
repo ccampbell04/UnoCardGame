@@ -30,12 +30,19 @@ class UnoTest(unittest.TestCase):
 
         self.assertEqual("R-1", self.uno.userTurn(deck, hand, topCard)[0])
 
-    def testPickUpAndPlay(self):
+    def testSameSuitPickUpAndPlay(self):
         topCard = "R-4"
         hand = ["G-1", "B-9"]
         deck = ["R-3"]
 
         self.assertEqual("R-3", self.uno.userTurn(deck,hand,topCard)[0])
+
+    def testSameNumPickUpAndPlay(self):
+        topCard = "R-4"
+        hand = ["G-1", "B-9"]
+        deck = ["G-4"]
+
+        self.assertEqual("G-4", self.uno.userTurn(deck, hand, topCard)[0])
 
     def testAbleToPlay(self):
         topCard = "R-1"
