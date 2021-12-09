@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 169, in <module>
+    uno.main()
+  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 164, in main
+    self.uno(deck, hands)
+  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 153, in uno
+    topCard, win = self.userTurn(deck, hands[self.playing_card.user_hand], topCard)
+  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 84, in userTurn
+    topCard = self.cantPlay(hand, deck, topCard)
+  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 115, in cantPlay
+    dealtSplit = self.splitCard(dealtCard)
+  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 54, in splitCard
+    splitCard = card.split("-")
+AttributeError: 'builtin_function_or_method' object has no attribute 'split'
