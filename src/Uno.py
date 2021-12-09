@@ -1,3 +1,5 @@
+import time
+
 from src.ConsoleInput import ConsoleInput
 from src.ConsoleOutput import ConsoleOutput
 from PlayingCard import PlayingCard
@@ -66,12 +68,7 @@ class Uno:
             deckSplit = self.splitCard(topCard)
             # print(split)
             while True:
-                if playerSplit[0] == deckSplit[0]:
-                    topCard = hand[play]
-                    hand.pop(play)
-                    self.output.display("Valid choice")
-                    break
-                elif playerSplit[1] == deckSplit[1]:
+                if playerSplit[0] == deckSplit[0] or playerSplit[1] == deckSplit[1]:
                     topCard = hand[play]
                     hand.pop(play)
                     self.output.display("Valid choice")
@@ -93,9 +90,7 @@ class Uno:
             topSplit = self.splitCard(topCard)
             for cards in hand:
                 cardSplit = self.splitCard(cards)
-                if cardSplit[0] == topSplit[0]:
-                    possibleMoves.append(cards)
-                elif cardSplit[1] == topSplit[1]:
+                if cardSplit[0] == topSplit[0] or cardSplit[1] == topSplit[1]:
                     possibleMoves.append(cards)
 
             bestMoveIndex = self.bestCompMove(possibleMoves)
@@ -111,19 +106,18 @@ class Uno:
         return topCard, win
 
     def cantPlay(self, hand, deck, topCard):
-        dealtCard = deck.pop
+        dealtCard = self.playing_card.deal_a_card(deck)
         dealtSplit = self.splitCard(dealtCard)
         deckSplit = self.splitCard(topCard)
 
-        if dealtSplit[0] == deckSplit[0]:
+        if dealtSplit[0] == deckSplit[0] or dealtSplit[1] == deckSplit[1]:
             self.output.display("Your new card is valid, playing " + dealtCard)
             topCard = dealtCard
-        elif dealtSplit[1] == deckSplit[0]:
-            self.output.display("Your new card is valid, playing " + dealtCard)
-            topCard = dealtCard
+            time.sleep(2.5)
         else:
-            self.output.display("New card can't be played, adding to hand")
-            hand.append(dealtSplit)
+            self.output.display("New card can't be played, adding " + dealtCard + " to hand")
+            time.sleep(2.5)
+            hand.append(dealtCard)
 
         self.output.display(hand)
         return topCard
@@ -149,11 +143,8 @@ class Uno:
         topCard = self.startCard(deck)
         self.output.display(topCard)
         win = False
-        while win==False:
+        while win == False:
             topCard, win = self.userTurn(deck, hands[self.playing_card.user_hand], topCard)
-
-
-
 
     def main(self):
         number_of_players = int(self.gameInput.getString("Please enter the number of players, max is six"))
@@ -173,5 +164,4 @@ Loop in uno to continue game after turn 1
 Program wild cards and special cards
 Calculate winner
 Calculate points for losing players
-
 '''
