@@ -131,7 +131,6 @@ class Uno:
         position = 0
         counter = 0
 
-        #print(possibleMoves)
         for moves in possibleMoves:
             split = self.splitCard(moves)
             intSplit = int(split[1])
@@ -157,6 +156,7 @@ class Uno:
             for i in range(1, number_of_players):
                 self.output.display("------------------------Computer " + str(i) + " turn------------------------")
                 topCard, win = self.computerTurn(deck, hands[i], topCard)
+                time.sleep(2)
 
     def main(self):
         number_of_players = int(self.gameInput.getString("Please enter the number of players, max is six"))
