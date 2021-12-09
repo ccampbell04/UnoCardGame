@@ -94,12 +94,16 @@ class Uno:
                     possibleMoves.append(cards)
 
             bestMoveIndex = self.bestCompMove(possibleMoves)
-            bestMove = possibleMoves(bestMoveIndex)
+            bestMove = possibleMoves[bestMoveIndex]
             topCard = bestMove
-            hand.pop(bestMove)
+            hand.pop(bestMoveIndex)
+
+            self.output.display("Computer played " + topCard)
 
         else:
             topCard = self.cantPlay(hand, deck, topCard)
+
+
 
         win = self.checkWinner(hand)
 
@@ -111,7 +115,7 @@ class Uno:
         deckSplit = self.splitCard(topCard)
 
         if dealtSplit[0] == deckSplit[0] or dealtSplit[1] == deckSplit[1]:
-            self.output.display("Your new card is valid, playing " + dealtCard)
+            self.output.display("New card is valid, playing " + dealtCard)
             topCard = dealtCard
             time.sleep(2.5)
         else:
@@ -124,14 +128,18 @@ class Uno:
 
     def bestCompMove(self, possibleMoves):
         bestFace = 0
+        position = 0
+        counter = 0
+
+        #print(possibleMoves)
         for moves in possibleMoves:
             split = self.splitCard(moves)
             intSplit = int(split[1])
             if intSplit > bestFace:
                 bestFace = int(split[1])
-                bestMove = moves
-
-        return bestMove
+                position = counter
+            counter += 1
+        return position
 
     def checkWinner(self, hand):
         if len(hand) == 0:
@@ -139,12 +147,16 @@ class Uno:
         else:
             return False
 
-    def uno(self, deck, hands):
+    def uno(self, deck, hands, number_of_players):
         topCard = self.startCard(deck)
         self.output.display(topCard)
         win = False
+
         while win == False:
             topCard, win = self.userTurn(deck, hands[self.playing_card.user_hand], topCard)
+            for i in range(1, number_of_players):
+                self.output.display("------------------------Computer " + str(i) + " turn------------------------")
+                topCard, win = self.computerTurn(deck, hands[i], topCard)
 
     def main(self):
         number_of_players = int(self.gameInput.getString("Please enter the number of players, max is six"))
@@ -152,7 +164,7 @@ class Uno:
         deck = self.playing_card.shuffle_cards(deck)
         hands = self.playing_card.deal_cards(deck, 7, number_of_players)
 
-        self.uno(deck, hands)
+        self.uno(deck, hands, number_of_players)
 
 
 if __name__ == "__main__":
