@@ -93,11 +93,11 @@ class UnoTest(unittest.TestCase):
     def testPlaySpecial(self):
         topCard = "R-1"
         hand = ["R-+2"]
-        index = 0
-        hands = [["R-+2"], ["R-2"]]
+        index = 1
+        hands = [["R-2"], ["R-+2"]]
         deck = ["B-3", "G-5"]
 
-        self.assertEqual(("R-+2", True), self.uno.userTurn(deck, hand, topCard, hands, index))
+        self.assertEqual(("R-+2", True), self.uno.computerTurn(deck, hand, topCard, hands, index))
 
 def main():
     unittest.main()

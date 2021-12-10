@@ -65,7 +65,7 @@ class Uno:
             topCard = colour + "-" + number
             self.output.display("Dealing 4 cards to next player")
             for i in range(3):
-                hands[index + 1] = self.playing_card.deal_a_card(deck)
+                hands[index + 1].append(self.playing_card.deal_a_card(deck))
 
                 # Wildcard
         elif card[0] == "W" and card[2] == "W":
@@ -78,8 +78,8 @@ class Uno:
         elif card[2] == "+":
             self.output.display("Dealing 2 cards to next player")
             topCard = card
-            for i in range(1):
-                hands[index + 1] = self.playing_card.deal_a_card(deck)
+            for i in range(0, 1):
+                hands[index + 1].append(self.playing_card.deal_a_card(deck))
         else:
             topCard = card
         return topCard
@@ -95,7 +95,7 @@ class Uno:
             while True:
                 play -= 1
                 playerSplit = self.splitCard(hand[play])
-                if playerSplit[0] == deckSplit[0] or playerSplit[1] == deckSplit[1]:
+                if playerSplit[0] == deckSplit[0] or playerSplit[1] == deckSplit[1] or playerSplit[0] == "W":
                     topCard = self.userCheckSpecialcard(hand[play], index, hands, deck, topCard)
                     hand.pop(play)
                     self.output.display("Valid choice")
@@ -134,11 +134,12 @@ class Uno:
             self.output.display("Top card is now " + topCard)
         # +2 Card
         elif card[2] == "+":
+            topCard = card
             self.output.display("Dealing 2 cards to next player")
             if index == len(hands):
-                for i in range(1):
+                for i in range(0, 1):
                     hands[index + 1] = self.playing_card.deal_a_card(deck)
-            for i in range(1):
+            for i in range(0, 1):
                 hands[0] = self.playing_card.deal_a_card(deck)
         else:
             topCard = card

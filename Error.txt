@@ -1,14 +1,16 @@
 Traceback (most recent call last):
-  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 169, in <module>
+  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 275, in <module>
     uno.main()
-  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 164, in main
-    self.uno(deck, hands)
-  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 153, in uno
-    topCard, win = self.userTurn(deck, hands[self.playing_card.user_hand], topCard)
-  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 84, in userTurn
-    topCard = self.cantPlay(hand, deck, topCard)
-  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 115, in cantPlay
-    dealtSplit = self.splitCard(dealtCard)
-  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 54, in splitCard
-    splitCard = card.split("-")
-AttributeError: 'builtin_function_or_method' object has no attribute 'split'
+  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 270, in main
+    self.uno(deck, hands, number_of_players)
+  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 261, in uno
+    self.playGame(deck, hands, number_of_players, topCard)
+  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 236, in playGame
+    topCard, win = self.computerTurn(deck, hands[i], topCard, hands, i)
+  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 149, in computerTurn
+    if self.ableToPlay(hand, topCard):
+  File "C:\Users\Callum Campbell\Documents\PythonProjects\FOPSE\PythonOOCardGames\src\Uno.py", line 41, in ableToPlay
+    elif cardSplit[1] == topCardSplit[1]:
+IndexError: list index out of range
+
+The turn after playing 2+
