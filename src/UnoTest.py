@@ -72,6 +72,15 @@ class UnoTest(unittest.TestCase):
 
         self.assertEqual(("B-9" ,False), self.uno.computerTurn(deck, hand, topCard, hands, index))
 
+    def testComputerCantPlay(self):
+        deck = ["W-W"]
+        hands = [["B-2"], ["B-3", "B-4"]]
+        hand = ["B-3", "B-4"]
+        topCard = "G-7"
+        index = 1
+
+        self.assertEqual(("B-4", False), self.uno.computerTurn(deck, hand, topCard, hands, index))
+
     def testBestCompMove(self):
         possibleMoves = ["Y-9", "B-+2", "R-S"]
 
