@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
 
-class Input(ABC):
+class Output(ABC):
     def getString(self, message):
         pass

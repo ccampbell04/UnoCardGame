@@ -107,7 +107,8 @@ class Uno:
             topCard = self.cantPlay(hand, deck, topCard)
 
         win = self.checkWinner(hand)
-
+        if len(hand)==1:
+            self.output.display("Uno!")
         return topCard, win
 
     def checkComputerSpecialCard(self, card, index, hand, deck, hands, topCard):
@@ -174,7 +175,8 @@ class Uno:
             topCard = self.cantPlay(hand, deck, topCard)
 
         win = self.checkWinner(hand)
-
+        if len(hand)==1:
+            self.output.display("Uno!")
         return topCard, win
 
     def cantPlay(self, hand, deck, topCard):
