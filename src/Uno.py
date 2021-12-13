@@ -104,7 +104,7 @@ class Uno:
                     self.output.display("Invalid choice")
                     play = self.userInput(hand)
         else:
-            topCard = self.cantPlay(hand, deck, topCard)
+            topCard = self.cantPlay(hand, deck, topCard, index, hands)
 
         win = self.checkWinner(hand)
         if len(hand)==1:
@@ -125,6 +125,7 @@ class Uno:
                     hands[index + 1] = self.playing_card.deal_a_card(deck)
             for i in range(3):
                 hands[0] = self.playing_card.deal_a_card(deck)
+            return topCard
 
         # Wildcard
         elif card[0] == "W" and card[2] == "W":
@@ -133,6 +134,7 @@ class Uno:
             bestCard = hand[bestCardPosition]
             topCard = bestCard
             self.output.display("Top card is now " + topCard)
+            return topCard
         # +2 Card
         elif card[2] == "+":
             topCard = card
@@ -142,6 +144,7 @@ class Uno:
                     hands[index + 1] = self.playing_card.deal_a_card(deck)
             for i in range(0, 1):
                 hands[0] = self.playing_card.deal_a_card(deck)
+            return topCard
         else:
             topCard = card
         return topCard
@@ -172,20 +175,21 @@ class Uno:
             self.output.display("Computer played " + topCard)
 
         else:
-            topCard = self.cantPlay(hand, deck, topCard)
+            topCard = self.cantPlay(hand, deck, topCard, index, hands)
 
         win = self.checkWinner(hand)
         if len(hand)==1:
             self.output.display("Uno!")
         return topCard, win
 
-    def cantPlay(self, hand, deck, topCard):
+    def cantPlay(self, hand, deck, topCard, index, hands):
         dealtCard = self.playing_card.deal_a_card(deck)
         dealtSplit = self.splitCard(dealtCard)
         deckSplit = self.splitCard(topCard)
 
-        if dealtSplit[0] == deckSplit[0] or dealtSplit[1] == deckSplit[1]:
+        if dealtSplit[0] == deckSplit[0] or dealtSplit[1] == deckSplit[1] or dealtSplit[0] == "W":
             self.output.display("New card is valid, playing " + dealtCard)
+            self.checkComputerSpecialCard(dealtCard, index, hand, deck, hands, topCard)
             topCard = dealtCard
             time.sleep(2.5)
         else:
@@ -277,6 +281,5 @@ if __name__ == "__main__":
     uno.main()
 
 '''Still to do
-Program wild cards and special cards
-Have UNO! displayed when any player has 1 card left
+special cards
 '''
