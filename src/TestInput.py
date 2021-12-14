@@ -8,4 +8,4 @@ class TestInput(Input):
         self.listOfTestInputs = listOfInputs
 
     def getString(self, message):
-        return self.listOfTestInputs.pop()
+        return self.listOfTestInputs.pop(0)

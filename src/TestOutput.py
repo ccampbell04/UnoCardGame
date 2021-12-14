@@ -7,5 +7,5 @@ class TestOutput(Output):
     def setListOfTestOutput(self, listOfOutputs):
         self.listOfTestOutputs = listOfOutputs
 
-    def getString(self, message):
-        return self.listOfTestOutputs.pop()
+    def display(self, message):
+        return self.listOfTestOutputs.append()

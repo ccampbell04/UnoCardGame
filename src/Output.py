@@ -2,5 +2,5 @@ from abc import ABC, abstractmethod
 
 
 class Output(ABC):
-    def getString(self, message):
+    def display(self, message):
         pass
