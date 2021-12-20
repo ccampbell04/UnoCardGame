@@ -14,6 +14,10 @@ class UnoTest(unittest.TestCase):
         testDeck = ["R0", "B4", "G7"]
         self.assertEqual("G7", self.uno.startCard(testDeck))
 
+    def testSplitCard(self):
+        card = "B-5"
+        self.assertEqual(["B", "5"], self.uno.splitCard(card))
+
     def testUserTurn(self):
         topCard = "R-1"
         hand = ["B-2", "R-4"]
