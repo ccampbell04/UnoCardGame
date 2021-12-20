@@ -12,12 +12,15 @@ class BlackJack:
     min_ace_score = 1
     good_number_of_cards = 5
     gameInput = ConsoleInput()
-    output = ConsoleOutput()
+    gameOutput = ConsoleOutput()
 
     playing_card = PlayingCard()
 
     def setGameInput(self, gameInput):
         self.gameInput = gameInput
+
+    def setGameOutput(self, gameOutput):
+        self.gameOutput = gameOutput
 
     def score_hand(self, hand):
         """Score an individual hand of playing cards. We add each card score to a total. All face cards King, Queen
@@ -66,14 +69,14 @@ class BlackJack:
      and are bust. In this case we move on."""
         answer = "D"
         while answer == "D":
-            self.output.display("Your hand is")
-            self.output.display(hand)
+            self.gameOutput.display("Your hand is")
+            self.gameOutput.display(hand)
             answer = self.valid_deal_input()
             if answer == "D":
                 if not self.deal_to_player(deck, hand):
                     answer = "F"
-                    self.output.display("Sorry you have gone over the score and are bust")
-                    self.output.display(hand)
+                    self.gameOutput.display("Sorry you have gone over the score and are bust")
+                    self.gameOutput.display(hand)
 
 
     def find_winner(self, hands):
@@ -127,11 +130,11 @@ class BlackJack:
         self.deal_to_computer(deck, hands, computer_risk)
         players = self.find_winner(hands)
         if len(players) == 1:
-            self.output.display("Player " + str(players[0]) + " is the winner")
+            self.gameOutput.display("Player " + str(players[0]) + " is the winner")
         else:
             for player in players:
-                self.output.display("Player " + str(player) + " draw")
-        self.output.display(hands)
+                self.gameOutput.display("Player " + str(player) + " draw")
+        self.gameOutput.display(hands)
 
     def main(self):
         """"Get the number of players, generate the deck of cards and work out the computer players risk."""

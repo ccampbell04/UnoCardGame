@@ -108,6 +108,16 @@ class UnoTest(unittest.TestCase):
 
         self.assertEqual(("R-+2", True), self.uno.computerTurn(deck, hand, topCard, hands, index))
 
+    def testCantPlayPickUpWild(self):
+        topCard = "B-2"
+        hand = ["G-6"]
+        index = 0
+        hands = [["G-6"], ["R-9"]]
+        deck = ["G-8", "W-W"]
+
+        self.assertEqual(("G-6", False, "computer"), self.uno.userTurn(deck, hand, topCard, hands, index))
+
+
 def main():
     unittest.main()
 
