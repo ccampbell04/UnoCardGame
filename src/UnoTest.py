@@ -21,6 +21,7 @@ class UnoTest(unittest.TestCase):
 
     def testUserInput(self):
         hand = ["B-5", "G-7", "R-2"]
+
         self.testInput.setListOfTestInputs([1])
         self.uno.setGameInput(self.testInput)
 
