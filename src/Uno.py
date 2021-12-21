@@ -66,41 +66,31 @@ class Uno:
 
     # TODO - TestCheckSpecialCard
     def checkSpecialCard(self, card, index, hand, deck, hands):
-        # +4 WildCard
+
         if card[2] == "+" and card[0] == "W":
             self.output.display("Wildcard played")
 
             if index == 0:
-                colour = self.gameInput.getString("Which colour would you like")
-                colour = colour.upper()
-                number = self.gameInput.getString("Which number would you like")
-                topCard = colour + "-" + number
+                topCard = self.userWildCard()
             else:
-                bestCardPosition = self.bestCompMove(hand)
-                bestCard = hand[bestCardPosition]
-                topCard = bestCard
-            self.output.display("Top card is now " + topCard)
+                topCard = self.computerWildCard(hand)
 
+            self.output.display("Top card is now " + topCard)
             self.output.display("Dealing 4 cards to next player")
+
             if index == 0:
-                for i in range(3):
-                    hands[index + 1].append(self.playing_card.deal_a_card(deck))
+                self.dealFour(hands, (index + 1), deck)
             else:
-                for i in range(3):
-                    hands[index - 1].append(self.playing_card.deal_a_card(deck))
-                # Wildcard
+                self.dealFour(hands, (index - 1), deck)
+
         elif card[0] == "W" and card[2] == "W":
             self.output.display("Wildcard played")
             if index == 0:
-                colour = self.gameInput.getString("Which colour would you like")
-                number = self.gameInput.getString("Which number would you like")
-                topCard = colour + "-" + number
+                topCard = self.useWildCard()
             else:
-                bestCardPosition = self.bestCompMove(hands[index])
-                bestCard = hand[bestCardPosition]
-                topCard = bestCard
-                self.output.display("Top card is now " + topCard)
-        # +2 Card
+                topCard = self.computerWildCard(hand)
+            self.output.display("Top card is now " + topCard)
+
         elif card[2] == "+":
             self.output.display("Dealing 2 cards to next player")
             topCard = card
@@ -126,6 +116,20 @@ class Uno:
         else:
             return topCard, "user"
 
+    def dealFour(self, hands, index, deck):
+        for i in range(3):
+            hands[index].append(self.playing_card.deal_a_card(deck))
+
+    def userWildCard(self):
+        colour = self.gameInput.getString("Which colour would you like")
+        colour = colour.upper()
+        number = self.gameInput.getString("Which number would you like")
+        return colour + "-" + number
+
+    def computerWildCard(self, hand):
+        bestCardPosition = self.bestCompMove(hand)
+        bestCard = hand[bestCardPosition]
+        return bestCard
     # TODO - Test userTurn
 
     def userTurn(self, deck, hand, topCard, hands, index):
