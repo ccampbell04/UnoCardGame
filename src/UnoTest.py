@@ -16,8 +16,15 @@ class UnoTest(unittest.TestCase):
         self.assertEqual(108, len(self.cards))
 
     def testStartCard(self):
-        testDeck = ["R0", "B4", "G7"]
-        self.assertEqual("G7", self.uno.startCard(testDeck))
+        testDeck = ["R-0", "B-4", "G-7"]
+        self.assertEqual("G-7", self.uno.startCard(testDeck))
+
+    def testUserInput(self):
+        hand = ["B-5", "G-7", "R-2"]
+        self.testInput.setListOfTestInputs([1])
+        self.uno.setGameInput(self.testInput)
+
+        self.assertEqual(1, self.uno.userInput(hand))
 
     def testSplitCard(self):
         card = "B-5"
