@@ -15,6 +15,12 @@ class Uno:
     gameInput = ConsoleInput()
     output = ConsoleOutput()
 
+    def setGameInput(self, gameInput):
+        self.gameInput = gameInput
+
+    def setGameOutput(self, gameOutput):
+        self.gameOutput = gameOutput
+
     def generateDeck(self):
         deck = []
         for suit in self.suits.keys():
@@ -43,6 +49,8 @@ class Uno:
 
         return False
 
+    # TODO - Test userInput
+
     def userInput(self, hand):
         while True:
             play = int(self.gameInput.getString("Pick a card to play (by position)"))
@@ -56,6 +64,7 @@ class Uno:
         splitCard = card.split("-")
         return splitCard
 
+    # TODO - TestCheckSpecialCard
     def checkSpecialCard(self, card, index, hand, deck, hands):
         # +4 WildCard
         if card[2] == "+" and card[0] == "W":
@@ -82,10 +91,15 @@ class Uno:
                 # Wildcard
         elif card[0] == "W" and card[2] == "W":
             self.output.display("Wildcard played")
-            colour = self.gameInput.getString("Which colour would you like")
-            number = self.gameInput.getString("Which number would you like")
-            topCard = colour + "-" + number
-
+            if index == 0:
+                colour = self.gameInput.getString("Which colour would you like")
+                number = self.gameInput.getString("Which number would you like")
+                topCard = colour + "-" + number
+            else:
+                bestCardPosition = self.bestCompMove(hands[index])
+                bestCard = hand[bestCardPosition]
+                topCard = bestCard
+                self.output.display("Top card is now " + topCard)
         # +2 Card
         elif card[2] == "+":
             self.output.display("Dealing 2 cards to next player")
@@ -111,6 +125,8 @@ class Uno:
             return topCard, "computer"
         else:
             return topCard, "user"
+
+    # TODO - Test userTurn
 
     def userTurn(self, deck, hand, topCard, hands, index):
         self.output.display(topCard)
@@ -213,6 +229,8 @@ class Uno:
             self.output.display("Uno!")
         return topCard, win, turn
 
+    # TODO - Test userCantPlay
+
     def cantPlay(self, hand, deck, topCard, index, hands):
         dealtCard = self.playing_card.deal_a_card(deck)
         dealtSplit = self.splitCard(dealtCard)
@@ -265,6 +283,7 @@ class Uno:
         else:
             return False
 
+    #TODO - Test calcPoints
     def calcLoserPoints(self, hands, number_of_players):
         for i in range(0, number_of_players):
             score = 0
