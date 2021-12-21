@@ -27,6 +27,18 @@ class UnoTest(unittest.TestCase):
 
         self.assertEqual(1, self.uno.userInput(hand))
 
+    def testCheckSpecialCards(self):
+        card="W-W"
+        index=0
+        hand = ["G-6"]
+        deck = ["G-8", "B-2"]
+        hands = [["G-6"], ["R-9"]]
+
+        self.testInput.setListOfTestInputs(["B", "2"])
+        self.uno.setGameInput(self.testInput)
+
+        self.assertEqual(("B-2", "computer"), self.uno.checkSpecialCard(card, index, hand, deck, hands))
+
     def testSplitCard(self):
         card = "B-5"
         self.assertEqual(["B", "5"], self.uno.splitCard(card))
