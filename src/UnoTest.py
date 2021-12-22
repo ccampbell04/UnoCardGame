@@ -24,6 +24,12 @@ class UnoTest(unittest.TestCase):
 
         self.assertEqual(False, self.uno.ableToPlay(hand, topCard))
 
+    def testWildAbleToPlay(self):
+        topCard = "B-3"
+        hand = ["W-W", "G-4"]
+
+        self.assertEqual(True, self.uno.ableToPlay(hand, topCard))
+
     def testSpecialAbleToPlay(self):
         topCard = "R-+2"
         hand = ["B-2", "B-+2"]

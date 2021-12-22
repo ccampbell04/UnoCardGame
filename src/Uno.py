@@ -42,9 +42,7 @@ class Uno:
         for cards in hand:
             cardSplit = self.splitCard(cards)
 
-            if cardSplit[0] == topCardSplit[0]:
-                return True
-            elif cardSplit[1] == topCardSplit[1]:
+            if cardSplit[0] == topCardSplit[0] or cardSplit[1] == topCardSplit[1] or cardSplit[0] == "W":
                 return True
 
         return False
