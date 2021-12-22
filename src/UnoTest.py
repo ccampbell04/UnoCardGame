@@ -235,9 +235,9 @@ class UnoTest(unittest.TestCase):
         self.assertTrue(self.uno.checkWinner(hand))
 
     def testCalcLoserPoints(self):
-        hands = [[], ["B-9", "W-W"]]
+        hands = [[], ["B-9", "W-W", "G-S", "B-+2", "R-R"]]
         number_of_players = 2
-        expectedOutput = ["Player scored 0", "Computer 1 scored 59"]
+        expectedOutput = ["Player scored 0", "Computer 1 scored 119"]
 
         self.testOutput.clear()
         self.uno.setGameOutput(self.testOutput)
