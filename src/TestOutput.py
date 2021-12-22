@@ -6,3 +6,6 @@ class TestOutput(Output):
 
     def display(self, message):
         return self.listOfTestOutputs.append(message)
+
+    def clear(self):
+        self.listOfTestOutputs = []

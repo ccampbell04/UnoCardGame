@@ -231,10 +231,9 @@ class UnoTest(unittest.TestCase):
         self.testInput.setListOfTestInputs([1])
         self.uno.setGameInput(self.testInput)
 
+        self.testOutput.clear()
         self.uno.setGameOutput(self.testOutput)
         self.uno.uno(deck, hands, number_of_players)
-
-        print(self.testOutput.listOfTestOutputs)
 
         self.assertEqual("B-9", self.testOutput.listOfTestOutputs[0])
 
