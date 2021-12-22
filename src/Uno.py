@@ -119,7 +119,7 @@ class Uno:
             hands[index].append(self.playing_card.deal_a_card(deck))
 
     def dealFourCards(self, hands, index, deck):
-        for i in range(3):
+        for i in range(4):
             hands[index].append(self.playing_card.deal_a_card(deck))
 
     def userWildCard(self):

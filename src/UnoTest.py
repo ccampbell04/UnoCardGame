@@ -18,6 +18,18 @@ class UnoTest(unittest.TestCase):
         testDeck = ["R-0", "B-4", "G-7"]
         self.assertEqual("G-7", self.uno.startCard(testDeck))
 
+    def testAbleToPlay(self):
+        topCard = "R-1"
+        hand = ["B-2", "Y-4", "G-+2"]
+
+        self.assertEqual(False, self.uno.ableToPlay(hand, topCard))
+
+    def testSpecialAbleToPlay(self):
+        topCard = "R-+2"
+        hand = ["B-2", "B-+2"]
+
+        self.assertEqual(True, self.uno.ableToPlay(hand, topCard))
+
     def testUserInput(self):
         hand = ["B-5", "G-7", "R-2"]
 
@@ -25,6 +37,10 @@ class UnoTest(unittest.TestCase):
         self.uno.setGameInput(self.testInput)
 
         self.assertEqual(1, self.uno.userInput(hand))
+
+    def testSplitCard(self):
+        card = "B-5"
+        self.assertEqual(["B", "5"], self.uno.splitCard(card))
 
     def testCheckSpecialCards(self):
         card = "W-W"
@@ -38,9 +54,34 @@ class UnoTest(unittest.TestCase):
 
         self.assertEqual(("B-2", "computer"), self.uno.checkSpecialCard(card, index, hand, deck, hands))
 
-    def testSplitCard(self):
-        card = "B-5"
-        self.assertEqual(["B", "5"], self.uno.splitCard(card))
+    def testDealTwoCards(self):
+        hands=[["B-3"], ["G-2"]]
+        index=1
+        deck=["G-3", "R-7", "B-5"]
+
+        self.uno.dealTwoCards(hands, index, deck)
+
+        self.assertEqual(3, len(hands[index]))
+
+    def testDealFourCards(self):
+        hands=[["B-3"], ["G-2"]]
+        index=1
+        deck=["G-3", "R-7", "B-5", "G-4"]
+
+        self.uno.dealFourCards(hands, index, deck)
+
+        self.assertEqual(5, len(hands[index]))
+
+    def testUserWildCard(self):
+        self.testInput.setListOfTestInputs(["B", "2"])
+        self.uno.setGameInput(self.testInput)
+
+        self.assertEqual("B-2", self.uno.userWildCard())
+
+    def testComputerWildCard(self):
+        hand=["B-4", "B-3", "G-7", "R-5"]
+
+        self.assertEqual("G-7", self.uno.computerWildCard(hand))
 
     def testUserTurn(self):
         topCard = "R-1"
@@ -94,17 +135,26 @@ class UnoTest(unittest.TestCase):
 
         self.assertEqual("G-4", self.uno.userTurn(deck, hand, topCard, hands, index)[0])
 
-    def testAbleToPlay(self):
+    def testCantPlayPickUpWild(self):
+        topCard = "B-2"
+        hand = ["G-6"]
+        index = 0
+        hands = [["G-6"], ["R-9"]]
+        deck = ["G-8", "W-W"]
+
+        self.testInput.setListOfTestInputs(["G", "6"])
+        self.uno.setGameInput(self.testInput)
+
+        self.assertEqual(("G-6", False, "computer"), self.uno.userTurn(deck, hand, topCard, hands, index))
+
+    def testComputerPlaySpecial(self):
         topCard = "R-1"
-        hand = ["B-2", "Y-4", "G-+2"]
+        hand = ["R-+2"]
+        index = 1
+        hands = [["R-2"], ["R-+2"]]
+        deck = ["B-3", "G-5"]
 
-        self.assertEqual(False, self.uno.ableToPlay(hand, topCard))
-
-    def testSpecialAbleToPlay(self):
-        topCard = "R-+2"
-        hand = ["B-2", "B-+2"]
-
-        self.assertEqual(True, self.uno.ableToPlay(hand, topCard))
+        self.assertEqual(("R-+2", True, "user"), self.uno.computerTurn(deck, hand, topCard, hands, index))
 
     def testComputerTurn(self):
         deck = []
@@ -145,6 +195,15 @@ class UnoTest(unittest.TestCase):
 
         self.assertEqual(("B-4", False, "user"), self.uno.computerTurn(deck, hand, topCard, hands, index))
 
+    def testComputerPlaySpecial(self):
+        topCard = "R-1"
+        hand = ["R-+2"]
+        index = 1
+        hands = [["R-2"], ["R-+2"]]
+        deck = ["B-3", "G-5"]
+
+        self.assertEqual(("R-+2", True, "user"), self.uno.computerTurn(deck, hand, topCard, hands, index))
+
     def testBestCompMove(self):
         possibleMoves = ["Y-9", "B-+2", "R-S"]
 
@@ -164,27 +223,6 @@ class UnoTest(unittest.TestCase):
 
         self.assertEqual(expectedOutput, self.testOutput.listOfTestOutputs)
 
-    def testPlaySpecial(self):
-        topCard = "R-1"
-        hand = ["R-+2"]
-        index = 1
-        hands = [["R-2"], ["R-+2"]]
-        deck = ["B-3", "G-5"]
-
-        self.assertEqual(("R-+2", True, "user"), self.uno.computerTurn(deck, hand, topCard, hands, index))
-
-    def testCantPlayPickUpWild(self):
-        topCard = "B-2"
-        hand = ["G-6"]
-        index = 0
-        hands = [["G-6"], ["R-9"]]
-        deck = ["G-8", "W-W"]
-
-        self.testInput.setListOfTestInputs(["G", "6"])
-        self.uno.setGameInput(self.testInput)
-
-        self.assertEqual(("G-6", False, "computer"), self.uno.userTurn(deck, hand, topCard, hands, index))
-
     def testUnoStartCard(self):
         deck = ["B-9", "W-W"]
         hands = [["B-6"], ["B-3"]]
@@ -196,7 +234,11 @@ class UnoTest(unittest.TestCase):
         self.uno.setGameOutput(self.testOutput)
         self.uno.uno(deck, hands, number_of_players)
 
+        print(self.testOutput.listOfTestOutputs)
+
         self.assertEqual("B-9", self.testOutput.listOfTestOutputs[0])
+
+
 
     # TODO - Test Whole game input/output
 
