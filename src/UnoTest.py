@@ -150,6 +150,17 @@ class UnoTest(unittest.TestCase):
 
         self.assertEqual(("G-6", False, "computer"), self.uno.userTurn(deck, hand, topCard, hands, index))
 
+    def testCantPlayPickUpPlusTwo(self):
+        topCard = "B-2"
+        hand = ["R-8"]
+        index = 0
+        hands = [["R-8"], ["Y-2"]]
+        deck = ["B-2", "G-2", "B-+2"]
+
+        self.uno.cantPlay(hand, deck, topCard, index, hands)
+
+        self.assertEqual(3, len(hands[1]))
+
     def testComputerPlaySpecial(self):
         topCard = "R-1"
         hand = ["R-+2"]
