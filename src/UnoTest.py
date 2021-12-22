@@ -243,10 +243,6 @@ class UnoTest(unittest.TestCase):
         self.assertEqual("B-9", self.testOutput.listOfTestOutputs[0])
 
 
-
-    # TODO - Test Whole game input/output
-
-
 def main():
     unittest.main()
 

@@ -1,7 +1,7 @@
 from Output import Output
 
-class TestOutput(Output):
 
+class TestOutput(Output):
     listOfTestOutputs = []
 
     def display(self, message):
