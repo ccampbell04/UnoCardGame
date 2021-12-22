@@ -299,7 +299,6 @@ class Uno:
         self.calcLoserPoints(hands, number_of_players)
 
     def main(self):
-        # number_of_players = int(self.gameInput.getString("Please enter the number of players, max is six"))
         number_of_players = 2
         deck = self.generateDeck()
         deck = self.playing_card.shuffle_cards(deck)

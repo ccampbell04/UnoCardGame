@@ -72,16 +72,16 @@ class UnoTest(unittest.TestCase):
 
         self.assertEqual(5, len(hands[index]))
 
+    def testComputerWildCard(self):
+        hand = ["B-4", "B-3", "G-7", "R-5"]
+
+        self.assertEqual("G-7", self.uno.computerWildCard(hand))
+
     def testUserWildCard(self):
         self.testInput.setListOfTestInputs(["B", "2"])
         self.uno.setGameInput(self.testInput)
 
         self.assertEqual("B-2", self.uno.userWildCard())
-
-    def testComputerWildCard(self):
-        hand = ["B-4", "B-3", "G-7", "R-5"]
-
-        self.assertEqual("G-7", self.uno.computerWildCard(hand))
 
     def testUserTurn(self):
         topCard = "R-1"
