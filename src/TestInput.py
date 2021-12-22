@@ -1,7 +1,7 @@
 from Input import Input
 
-class TestInput(Input):
 
+class TestInput(Input):
     listOfTestInputs = []
 
     def setListOfTestInputs(self, listOfInputs):

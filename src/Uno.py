@@ -207,8 +207,6 @@ class Uno:
         else:
             turn = "user"
 
-        #Top = B-2
-        # B-+2
         if dealtSplit[0] == deckSplit[0] or dealtSplit[1] == deckSplit[1] or dealtSplit[0] == "W":
             self.gameOutput.display("New card is valid, playing " + dealtCard)
             topCard, turn = self.checkSpecialCard(dealtCard, index, hand, deck, hands)
