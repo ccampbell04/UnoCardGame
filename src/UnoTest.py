@@ -103,7 +103,10 @@ class UnoTest(unittest.TestCase):
 
         self.testInput.setListOfTestInputs([1])
         self.uno.setGameInput(self.testInput)
+
+        self.testOutput.clear()
         self.uno.setGameOutput(self.testOutput)
+
         self.uno.userTurn(deck, hand, topCard, hands, index)
 
         self.assertEqual("Uno!", self.testOutput.listOfTestOutputs[-1])
@@ -181,6 +184,7 @@ class UnoTest(unittest.TestCase):
         index = 0
         hands = []
 
+        self.testOutput.clear()
         self.uno.setGameOutput(self.testOutput)
         self.uno.cantPlay(hand, deck, topCard, index, hands)
 
@@ -218,6 +222,7 @@ class UnoTest(unittest.TestCase):
         number_of_players = 2
         expectedOutput = ["Player scored 0", "Computer 1 scored 59"]
 
+        self.testOutput.clear()
         self.uno.setGameOutput(self.testOutput)
         self.uno.calcLoserPoints(hands, number_of_players)
 
