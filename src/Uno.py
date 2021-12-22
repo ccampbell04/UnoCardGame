@@ -232,7 +232,7 @@ class Uno:
             except:
                 self.gameOutput.display("Special card")
             finally:
-                if split[1] == "+2":
+                if split[1] == "+2" or split[1] == "S" or split[1] == "R":
                     bestFace = split[1]
                     position = counter
 

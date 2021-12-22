@@ -226,9 +226,9 @@ class UnoTest(unittest.TestCase):
         self.assertEqual(("R-+2", True, "user"), self.uno.computerTurn(deck, hand, topCard, hands, index))
 
     def testBestCompMove(self):
-        possibleMoves = ["Y-9", "B-+2", "R-S"]
+        possibleMoves = ["Y-9", "B-+2", "R-S", "W-W"]
 
-        self.assertEqual(1, self.uno.bestCompMove(possibleMoves))
+        self.assertEqual(2, self.uno.bestCompMove(possibleMoves))
 
     def testCheckWinner(self):
         hand = []
