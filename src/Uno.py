@@ -181,7 +181,6 @@ class Uno:
             self.gameOutput.display("Uno!")
         return topCard, win, turn
 
-    # TODO - Test playComputer Crud
     def playComputerCard(self, possibleMoves, index, hand, deck, hands):
 
         bestMoveIndex = self.bestCompMove(possibleMoves)
@@ -199,8 +198,6 @@ class Uno:
         self.gameOutput.display("Computer played " + topCard)
 
         return topCard, turn
-
-    # TODO - Test userCantPlay
 
     def cantPlay(self, hand, deck, topCard, index, hands):
         dealtCard = self.playing_card.deal_a_card(deck)
@@ -254,7 +251,6 @@ class Uno:
         else:
             return False
 
-    # TODO - Test calcPoints
     def calcLoserPoints(self, hands, number_of_players):
         for i in range(0, number_of_players):
             score = 0
@@ -292,7 +288,6 @@ class Uno:
 
             time.sleep(1)
 
-    # TODO - Test uno
     def uno(self, deck, hands, number_of_players):
         valid = False
         while not valid:
