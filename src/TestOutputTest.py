@@ -9,11 +9,12 @@ class TestCase(unittest.TestCase):
 
     def testFirstOutput(self):
         testInput = TestInput()
-        testInput.setListOfTestInputs([3, "D", "D", "D"])
         blackJack = BlackJack()
-        blackJack.setGameInput(testInput)
-
         testOutput = TestOutput()
+
+        testInput.setListOfTestInputs([3, "D", "D", "D"])
+
+        blackJack.setGameInput(testInput)
         blackJack.setGameOutput(testOutput)
         blackJack.main()
 

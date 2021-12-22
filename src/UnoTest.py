@@ -45,7 +45,7 @@ class UnoTest(unittest.TestCase):
 
     def testUserTurn(self):
         topCard = "R-1"
-        hand = ["B-2", "R-4"]
+        hand = ["B-2", "R-4", "G-3"]
         deck = []
         hands = []
         index = 0
@@ -53,6 +53,21 @@ class UnoTest(unittest.TestCase):
         self.testInput.setListOfTestInputs([2])
         self.uno.setGameInput(self.testInput)
         self.assertEqual(("R-4", False, "computer"), self.uno.userTurn(deck, hand, topCard, hands, index))
+
+    def testUserTurnUno(self):
+        topCard = "B-2"
+        hand = ["B-1", "G-7"]
+        deck = []
+        hands = []
+        index = 0
+
+        self.testInput.setListOfTestInputs([1])
+        self.uno.setGameInput(self.testInput)
+        self.uno.setGameOutput(self.testOutput)
+        self.uno.userTurn(deck, hand, topCard, hands, index)
+
+        self.assertEqual("Uno!", self.testOutput.listOfTestOutputs[-1])
+
 
     def testUserCantPlay(self):
         topCard = "R-1"
