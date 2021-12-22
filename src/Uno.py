@@ -252,7 +252,7 @@ class Uno:
             for card in hands[i]:
                 if card[0] == "W":
                     score += 50
-                elif card[1] == "+" or card[1] == "R" or card == "S":
+                elif card[2] == "+" or card[1] == "R" or card == "S":
                     score += 20
                 else:
                     score += int(card[2])

@@ -245,6 +245,17 @@ class UnoTest(unittest.TestCase):
 
         self.assertEqual(expectedOutput, self.testOutput.listOfTestOutputs)
 
+    def testCalcLoserPointsWithPlusTwo(self):
+        hands = [[], ["B-+2", "W-W"]]
+        number_of_players = 2
+        expectedOutput = ["Player scored 0", "Computer 1 scored 70"]
+
+        self.testOutput.clear()
+        self.uno.setGameOutput(self.testOutput)
+        self.uno.calcLoserPoints(hands, number_of_players)
+
+        self.assertEqual(expectedOutput, self.testOutput.listOfTestOutputs)
+
     def testUnoStartCard(self):
         deck = ["B-9", "W-W"]
         hands = [["B-6"], ["B-3"]]
