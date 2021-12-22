@@ -55,18 +55,18 @@ class UnoTest(unittest.TestCase):
         self.assertEqual(("B-2", "computer"), self.uno.checkSpecialCard(card, index, hand, deck, hands))
 
     def testDealTwoCards(self):
-        hands=[["B-3"], ["G-2"]]
-        index=1
-        deck=["G-3", "R-7", "B-5"]
+        hands = [["B-3"], ["G-2"]]
+        index = 1
+        deck = ["G-3", "R-7", "B-5"]
 
         self.uno.dealTwoCards(hands, index, deck)
 
         self.assertEqual(3, len(hands[index]))
 
     def testDealFourCards(self):
-        hands=[["B-3"], ["G-2"]]
-        index=1
-        deck=["G-3", "R-7", "B-5", "G-4"]
+        hands = [["B-3"], ["G-2"]]
+        index = 1
+        deck = ["G-3", "R-7", "B-5", "G-4"]
 
         self.uno.dealFourCards(hands, index, deck)
 
@@ -79,7 +79,7 @@ class UnoTest(unittest.TestCase):
         self.assertEqual("B-2", self.uno.userWildCard())
 
     def testComputerWildCard(self):
-        hand=["B-4", "B-3", "G-7", "R-5"]
+        hand = ["B-4", "B-3", "G-7", "R-5"]
 
         self.assertEqual("G-7", self.uno.computerWildCard(hand))
 
